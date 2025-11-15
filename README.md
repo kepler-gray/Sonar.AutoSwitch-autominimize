@@ -2,6 +2,8 @@
 
 Automatically switch Sonar gaming configurations when a game is in focus.
 
+(This fork was quickly thrown together with the help of Google Gemini. The app minimizes to tray 1/4th second after it starts up.)
+
 <img width="688" alt="image" src="https://user-images.githubusercontent.com/27368554/204064870-da45ebaa-e577-4998-aaa1-4c18386149e1.png">
 
 ## Contribution to game database
