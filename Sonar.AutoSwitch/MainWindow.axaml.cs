@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks; // <-- 1. Added this namespace
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -17,6 +18,9 @@ namespace Sonar.AutoSwitch;
 public partial class MainWindow : AppWindow
 {
     private readonly Frame _frameView;
+    
+    // 2. Added a flag to track the first-time open
+    private bool _isFirstOpening = true;
 
     public MainWindow()
     {
@@ -44,9 +48,26 @@ public partial class MainWindow : AppWindow
         });
     }
 
-    protected override void OnOpened(EventArgs e)
+    // 3. Made the method 'async void'
+    protected override async void OnOpened(EventArgs e)
     {
         base.OnOpened(e);
+
+        // 4. Added the brute-force logic
+        if (_isFirstOpening)
+        {
+            // This is the first time the window is shown
+            // Wait 250ms (a quarter second) as you suggested
+            await Task.Delay(250);
+            
+            // Hide the window (same as minimizing to tray)
+            Hide();
+            
+            // Set the flag so this doesn't run again
+            _isFirstOpening = false;
+        }
+        
+        // The rest of the original method continues below
         var thm = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>();
         thm!.RequestedThemeChanged += OnRequestedThemeChanged;
         // Enable Mica on Windows 11
